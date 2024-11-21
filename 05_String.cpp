@@ -1,159 +1,92 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
+int getMaxOccurrences(string components, int minLength, int maxLength, int maxUnique) {
+    unordered_map<string, int> substringFrequency;
+    int maxFrequency = 0;
 
+    // Loop over all possible lengths within the range [minLength, maxLength]
+    for (int len = minLength; len <= maxLength; len++) {
+        unordered_map<char, int> charCount;
+        int uniqueChars = 0;
+        
+        // Initialize the first window of length 'len'
+        for (int i = 0; i < len; i++) {
+            charCount[components[i]]++;
+            if (charCount[components[i]] == 1) uniqueChars++;
+        }
 
-string removeOuterParentheses(string s) {
-    string result;
-    int n = s.size();
-    stack<char> st;
+        // Check if this initial substring satisfies the unique character constraint
+        if (uniqueChars <= maxUnique) {
+            string substring = components.substr(0, len);
+            substringFrequency[substring]++;
+            maxFrequency = max(maxFrequency, substringFrequency[substring]);
+        }
 
-    //push the outermost element onto the stack
-    // ( pushed into stack
-    // st.push(s[0]);
+        // Slide the window across the string
+        for (int i = len; i < components.size(); i++) {
+            // Remove the character going out of the window
+            char leftChar = components[i - len];
+            charCount[leftChar]--;
+            if (charCount[leftChar] == 0) uniqueChars--;
 
-    //to store the top of the stack
-    char x;
+            // Add the new character coming into the window
+            char rightChar = components[i];
+            charCount[rightChar]++;
+            if (charCount[rightChar] == 1) uniqueChars++;
 
-    for(int i = 0; i < n; i++ ){
-        cout << i << endl;
+            // Check if the current window satisfies the unique character constraint
+            if (uniqueChars <= maxUnique) {
+                string substring = components.substr(i - len + 1, len);
+                substringFrequency[substring]++;
+                maxFrequency = max(maxFrequency, substringFrequency[substring]);
+            }
+        }
+    }
     
-        if( s[i] == '('){
-            cout <<"Size ( " << st.size() << endl;
-
-            //storing it on to the array result
-            if( st.size() > 0){
-                result.push_back(s[i]);        
-            }    
-            //pushing on to the stack
-            st.push(s[i]);
-             
-        }
-        else{
-            cout <<"Size " << st.size() << endl;
-            st.pop();
-            if( st.size() > 0){
-                result.push_back(s[i]);
-            }
+    return maxFrequency;
+}
+int f(string &s){
+    int max = s[1] - 48;
+    int ind =1;
+    for(int i = 2; i < s.length(); i++){
+        int x = s[i] - 48;
+        if ( max < x){
+            max = x;
+            ind = i;
         }
     }
-    return result;
+    return ind;
 }
-
-string reverseWords(string s) {
-    int n = s.size();
-    string result;
-    //to store the element
-    stack<char> st;
-
-    int spaces =0;
-    for( int i = n -1; i >= 0; i--){
-        
-        if(s[i] != ' '){
-            spaces = 0;
-            st.push(s[i]);
-        }
-        else{
-            if(spaces == 0){
-                while(!(st.empty())){
-                    result.push_back(st.top());
-                    st.pop();
-                }
-                // char x = st.top();
-                // result.push_back(x);
-            }
-            spaces++;
-        }
-        cout << result;
-        // st.push(s[i]);
-        // result.push_back(s[i]);'
-
-        
+int solution(string& a, string& b){
+    if(a[0]<b[0]) return solution(b,a);
+    int n = a.length();
+    int cnt = 0;
+    int j = 0;
+    while(j < n && a[j] == b[j] ){
+        j++;
     }
-    return result;
+    if(a[j]<b[j]) return solution(b,a);
+
+        for(int i = j + 1; i < a.length();i++) if(a[i]>b[i]) {
+            // cout << a[i];
+            swap(a[i],b[i]);
+            cnt++;
+        }
+    // cout<<a;
+    return min(cnt,n-cnt-j);
 }
 
-string largestOddNumber(string num) {
-    string str="";
-        int n = num.size();
-        int oddlen = 0;
-        for( int i = 0 ; i < n ; i++){
-            // cout << num[i] << endl;
-            if( num[i] % 2 == 0){
-                continue;
-            }
-            else{
-                oddlen = i + 1;
-                // cout << oddlen << endl;
-            }
-        }
-        // cout << oddlen << endl;
-        if( oddlen == 0){
-            return "";
-        }
-        for( int i = 0; i < oddlen ; i++){
-            str += num[i];
-            // cout << str[i] << endl;
-        }
-        // cout << str << endl;
-        return str;
-}
-
-int lengthOfAString(string s){
-    int count = 1;
-    int i = 0;
-    while(s[i] != '/0'){
-        count++;
-        i++;
-    }
-    return count;
-}
-
-bool rotateString(string s, string goal) {
-        int m = s.length();
-        cout << m << endl;
-        int n = m - 1;
-        cout << n << endl;
-        vector<char> temp(m); 
-        while( n > 0){
-            cout << "Running While " << endl;
-            for( int i = 1; i < m; i++){
-                temp[i-1] = s[i]; 
-            }
-            temp[n-1] = s[0];
-            if( temp == goal){
-                return true;
-            }
-            n--;
-            cout << temp << endl;
-        }
-        return false;
-    }
-
-int main(){
-    // int n;
-    // cin >> n;
-
+int main() {
     string s;
-
+    string t;
     cin >> s;
+    cin >> t;
 
-    string goal;
-    cin >> goal;
+    int ans = solution(s,t);
 
-    // for(int i = 0; i < n; i++){
-        // char ch;
-        // cin >> ch;
-        // s.push_back(ch);
-    // }
 
-    // cout << reverseWords(s);
-    // cout << removeOuterParentheses(s);
-    // cout << largestOddNumber(s);
-    // cout << lengthOfAString(s);
-    cout << rotateString(s,goal);
-    cout << endl;
+    cout << ans << endl;
 
     return 0;
 }

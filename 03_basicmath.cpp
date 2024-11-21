@@ -156,20 +156,38 @@ int minJumps(vector<int>& arr, int n){
         return count;
 }
 
+int findComplement(int num) {
+        if( num == 1){
+            return 0;
+        }
+        if( num == 0){
+            return 0;
+        }
+        int digits;
+        digits = log2(num) + 1;
+        cout << digits << endl;
+        
+        long long num2;
+        cout << num2 << endl;
+
+        return num ^ ;
+
+    }
+
 
 int main(){
     int n;
     cin>>n;
 
-    vector<int> arr;
+    // vector<int> arr;
 
-    for ( int i =0; i < n; i++){
-        int num;
-        cin >> num;
-        arr.push_back(num);
-    }
+    // for ( int i =0; i < n; i++){
+        // int num;
+        // cin >> num;
+        // arr.push_back(num);
+    // }
 
-    cout << minJumps(arr,n); 
+    cout << findComplement(n); 
     // cout<<checkArmstrong(n);
     // printAllDivisors(n);
     // revisedDivisor(n);
