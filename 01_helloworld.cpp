@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,11 +22,3 @@ int main(){
   pattern5(n);
   return 0;
 }
-
-
-//Basic Information related to c++
-/*
-  Qt framework
-  gtest
-  eigen
-*/
