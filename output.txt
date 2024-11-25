@@ -1,9 +1,4 @@
-Parameter Constructor called
-Tea Name : Lemon Tea
-servings : 23
-Ingredients : Lemon Water Honey 
-This is a copy constructor
-This is the tea
-Tea Name : Lemon Tea
-servings : 23
-Ingredients : Lemon Water Honey 
+1000
+Amount Deposited successfully
+WithDrawn successfully 
+1655
