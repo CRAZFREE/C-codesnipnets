@@ -1,4 +1,0 @@
-1000
-Amount Deposited successfully
-WithDrawn successfully 
-1655
