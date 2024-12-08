@@ -3,7 +3,7 @@
 using namespace std;
 
 class Chai{
-public:
+private:
     string teaName;
     int servings;
     vector<string> ingredients;
@@ -16,7 +16,7 @@ public:
         servings = 1;
         ingredients = {"Water", "Tealeaves"};
     }
-
+public:
     void display(){
         cout << "Tea Name : " << teaName << endl;
         cout << "servings : " << servings << endl;
